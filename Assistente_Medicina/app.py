@@ -1,5 +1,5 @@
 import streamlit as st
-from core_agent import chat_with_history, chat_especialista_with_history
+from core_agent import chat_with_history
 from vector import buscar_contexto
 from scrapping_especialistas import retornar_json
 from obter_endereco import obter_endereco
@@ -66,17 +66,16 @@ if modo == "👨‍⚕️ Especialistas":
 
             try:
                 endereco = obter_endereco(cep_formatado)
-                cidade = endereco.get("city", "").lower()
-                estado = endereco.get("state", "").lower()
-
+                cidade = endereco.get("localidade", "").lower()
+                estado = endereco.get("uf", "").lower()
                 st.info(f"🔍 Buscando especialistas em {especialidade} na região de {cidade.upper()} - {estado.upper()}...")
+
 
                 dados_especialistas = retornar_json(especialidade, cidade, estado)
 
                 if dados_especialistas:
-                    st.success(f"{len(dados_especialistas)} especialistas encontrados.")
+                    st.success(f"Especialistas encontrados.")
 
-                    # Exibe apenas a quantidade solicitada
                     for i,especialista in enumerate(dados_especialistas[:quantidade]):
                         st.markdown(f"""
                         {i + 1}. **Nome:** {especialista.get('name', 'Não informado')}  
