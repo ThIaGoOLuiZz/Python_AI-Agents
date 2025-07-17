@@ -4,3 +4,5 @@ langchain_community
 langchain_chroma
 datasets
 streamlit
+bs4
+lxml
